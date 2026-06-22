@@ -1,3 +1,15 @@
+---
+title: Pums Tools
+emoji: 🦜
+colorFrom: indigo
+colorTo: cyan
+sdk: gradio
+sdk_version: 5.49.1
+app_file: app.py
+pinned: false
+license: apache-2.0
+---
+
 # 🛠️ Pum's Tools
 
 Bộ sưu tập các công cụ tiện ích của Pum.
