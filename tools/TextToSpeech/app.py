@@ -1950,8 +1950,9 @@ with gr.Blocks(theme=theme, css=css, title="Pum's Tools — TextToSpeech", head=
 
 
 def main():
-    server_name = os.getenv("GRADIO_SERVER_NAME", "127.0.0.1")
-    server_port = int(os.getenv("GRADIO_SERVER_PORT", "7861"))
+    server_name = os.getenv("GRADIO_SERVER_NAME", "0.0.0.0" if ("SPACE_ID" in os.environ or "PORT" in os.environ) else "127.0.0.1")
+    default_port = "7860" if "SPACE_ID" in os.environ else ("7861" if "PORT" not in os.environ else os.getenv("PORT"))
+    server_port = int(os.getenv("GRADIO_SERVER_PORT", default_port))
 
     is_on_colab = os.getenv("COLAB_RELEASE_TAG") is not None
     share = env_bool("GRADIO_SHARE", default=is_on_colab)
