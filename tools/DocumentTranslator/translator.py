@@ -41,7 +41,19 @@ def get_local_model_and_tokenizer(model_name: str):
         tokenizer = M2M100Tokenizer.from_pretrained(model_name)
         model = M2M100ForConditionalGeneration.from_pretrained(model_name)
     else:
-        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        try:
+            if "opus-mt" in model_name or "helsinki" in model_name.lower():
+                from transformers import MarianTokenizer
+                tokenizer = MarianTokenizer.from_pretrained(model_name)
+            else:
+                tokenizer = AutoTokenizer.from_pretrained(model_name)
+        except Exception as e:
+            print(f"⚠️ Cảnh báo: AutoTokenizer thất bại, chuyển sang MarianTokenizer cho {model_name}: {e}")
+            try:
+                from transformers import MarianTokenizer
+                tokenizer = MarianTokenizer.from_pretrained(model_name)
+            except Exception:
+                tokenizer = AutoTokenizer.from_pretrained(model_name)
         model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
     
     device = "cuda" if torch.cuda.is_available() else "cpu"

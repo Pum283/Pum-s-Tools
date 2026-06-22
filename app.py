@@ -7,6 +7,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from tools.TextToSpeech.app import demo as tts_demo
 from tools.DocumentTranslator.app import demo as trans_demo
+from tools.DocReader.app import demo as doc_reader_demo, voice_components, update_voices_fn
 from tools.TextToSpeech.ui_constants import theme, css, head_html
 
 # Create unified block interface
@@ -27,6 +28,21 @@ with gr.Blocks(theme=theme, css=css, title="Pum's Tools", head=head_html) as dem
             
         with gr.Tab("📄 Dịch tài liệu"):
             trans_demo.render()
+            
+        with gr.Tab("📖 Đọc tài liệu") as doc_reader_tab:
+            doc_reader_demo.render()
+            
+    doc_reader_tab.select(
+        fn=update_voices_fn,
+        outputs=voice_components
+    )
+    
+    # Enforce dark mode and initial voice choices load
+    demo.load(
+        fn=update_voices_fn,
+        outputs=voice_components,
+        js="() => { document.documentElement.classList.add('dark'); }"
+    )
 
 def main():
     server_name = os.getenv("GRADIO_SERVER_NAME", "0.0.0.0" if ("SPACE_ID" in os.environ or "PORT" in os.environ) else "127.0.0.1")
