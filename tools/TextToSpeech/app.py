@@ -1543,15 +1543,6 @@ with gr.Blocks(theme=theme, css=css, title="Pum's Tools — TextToSpeech", head=
     session_id_state = gr.State("")
 
     with gr.Column(elem_classes="container"):
-        gr.HTML("""
-<div class="header-box">
-    <h1 class="header-title">
-        <span class="header-icon">🦜</span>
-        <span class="gradient-text">Pum's Tools</span>
-    </h1>
-    <p class="header-subtitle">🗣️ Text to Speech</p>
-</div>
-        """)
 
         # --- CONFIGURATION (Hidden from UI, but active in backend) ---
         with gr.Group(visible=False):
